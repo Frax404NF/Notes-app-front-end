@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+}
+
+body {
+  color: #2d4059;
+  font-family: "Poppins", sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+/* Main app container */
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  /* justify-items: center; */
+  align-items: start;
+  gap: 20px;
+  padding: 20px 20px 20px 0px;
+}
+
+/* Form container */
+space-form {
+  justify-self: center;
+  width: 100%;
+  max-width: 850px;
+}
+
+@media (min-width: 769px) {
+  .app {
+    padding: 20px;
+  }
+}

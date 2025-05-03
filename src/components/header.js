@@ -32,7 +32,6 @@ class headerSection extends HTMLElement {
                 font-style: normal;
             }
 
-             /* Responsive styles */
             @media screen and (max-width: 768px) {
                 nav {
                     grid-template-columns: 1fr;

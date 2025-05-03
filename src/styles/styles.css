@@ -17,18 +17,15 @@ body {
   min-height: 100vh;
 }
 
-/* Main app container */
 .app {
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;
-  /* justify-items: center; */
   align-items: start;
   gap: 20px;
   padding: 20px 20px 20px 0px;
 }
 
-/* Form container */
 space-form {
   justify-self: center;
   width: 100%;

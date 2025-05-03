@@ -1,3 +1,5 @@
+import notesData from "../data/notes.js";
+
 const template = document.createElement("template");
 template.innerHTML = `
 <style>
@@ -9,15 +11,15 @@ template.innerHTML = `
   display: grid;
   gap: 10px;
   width: 100%;
-  max-width: 800px; /* Replaced min-width with max-width */
-  margin: 0 auto; /* Center the card */
-  box-sizing: border-box; /* Prevent overflow */
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 h2 {
   margin-top: 0;
   color: #2d4059;
-  font-size: clamp(1.2rem, 2vw, 1.4rem); /* Responsive font size */
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
 }
@@ -28,7 +30,7 @@ form {
 }
 
 label {
-  font-size: clamp(1rem, 1.5vw, 1.2rem); /* Responsive label size */
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   color: #2d4059;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -43,8 +45,8 @@ input, textarea {
   resize: vertical;
   font-family: "Poppins", sans-serif;
   font-weight: 300;
-  width: 100%; /* Full width inputs */
-  box-sizing: border-box; /* Prevent overflow */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 textarea {
@@ -59,7 +61,7 @@ button {
   color: white;
   font-size: 1em;
   cursor: pointer;
-  width: 100%; /* Full width button */
+  width: 100%;
 }
 
 button:hover {
@@ -71,11 +73,10 @@ button:hover {
   font-size: 0.85em;
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
   .card {
     padding: 15px;
-    margin: 0 10px; /* Add some spacing on sides */
+    margin: 0 10px;
   }
 
   textarea {
@@ -123,7 +124,7 @@ button:hover {
     <textarea id="body" name="body" placeholder="Tulis catatan Anda di sini..." required></textarea>
     <div id="bodyError" class="error"></div>
 
-    <button type="submit">Tambah</button>
+    <button type="submit">Tambah Catatan</button>
   </form>
 </div>
 `;
@@ -133,7 +134,7 @@ class addNotes extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({ mode: "open" });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
-    this.notesData = []; // Store existing notes for title uniqueness
+    this.notesData = [];
   }
 
   connectedCallback() {
@@ -162,7 +163,7 @@ class addNotes extends HTMLElement {
       this._titleError.textContent = "Judul tidak boleh kosong.";
       return false;
     }
-    const isDuplicate = this.notesData.some(note => note.title === title);
+    const isDuplicate = this.notesData.some((note) => note.title === title);
     if (isDuplicate) {
       this._titleError.textContent = "Judul sudah digunakan.";
       return false;
@@ -204,11 +205,20 @@ class addNotes extends HTMLElement {
       archived: false,
     };
 
+    notesData.push(newNote);
+    localStorage.setItem("notesData", JSON.stringify(notesData));
+
     this.dispatchEvent(new CustomEvent("note-add", { detail: newNote }));
 
     this._form.reset();
     this._titleError.textContent = "";
     this._bodyError.textContent = "";
+
+    const notesList = document.querySelector("notes-list");
+
+    if (notesList) {
+      notesList.render();
+    }
   }
 }
 
